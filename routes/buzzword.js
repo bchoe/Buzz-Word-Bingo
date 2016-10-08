@@ -1,11 +1,14 @@
 const express = require('express');
 const router = express.Router();
+let buzzWords = [];
 
 router.route('/')
 
   .post((req,res) => {
     console.log('req.body:', req.body);
-    res.send('posted a new book');
+    buzzWords.push(req.body);
+    res.send('{"success": true}');
+
   })
 
   .put((req,res) => {
@@ -16,4 +19,9 @@ router.route('/')
     res.send('Deleted a book');
   });
 
-module.exports = router;
+router.get('/:id', (req, res) => {
+  console.log("req.params.id: ", req.params.id);
+  res.send(req.params.id);
+});
+
+module.exports = {router: router, buzzwords: buzzWords};
