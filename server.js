@@ -16,22 +16,31 @@ function createBuzzWord(word, points){
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static('public'));
 
-app.get('/buzzwords', (req,res) => {
-  res.json(wordArr);
-});
+app.route('/buzzwords')
 
-app.post('/buzzwords', (req,res) => {
-  let dupFound = wordArr.find((word) => {
-    return word.buzzWord === req.body.buzzWord;
-  });
-  if(!dupFound){
-    createBuzzWord(req.body.buzzWord, req.body.points);
-  }
-  return res.json({
-    success: !dupFound
-  });
+  .get((req,res) => {
+    res.json(wordArr);
+  })
 
-});
+  .post((req,res) => {
+    let dupFound = wordArr.find((word) => {
+      return word.buzzWord === req.body.buzzWord;
+    });
+    if(!dupFound){
+      createBuzzWord(req.body.buzzWord, req.body.points);
+    }
+    return res.json({
+      success: !dupFound
+    });
+  })
+
+  .put((req,res) => {
+
+  })
+
+  .delete((req,res) => {
+
+  });
 
 const server = app.listen(PORT, () => {
   console.log(`Server started on ${PORT}`);
