@@ -25,10 +25,6 @@ function getBuzzWord(element){
   return selectedIndex;
 }
 
-function updateBuzzWord(){
-
-}
-
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static('public'));
 
@@ -66,7 +62,13 @@ app.route('/buzzwords')
   })
 
   .delete((req,res) => {
-
+    let selectedBuzzword = getBuzzWord(req.body);
+    if(selectedBuzzword > -1){
+      wordArr.splice(selectedBuzzword, 1);
+      res.send(`{"success": true}`);
+    } else {
+      res.send('{"success": false}');
+    }
   });
 
 const server = app.listen(PORT, () => {
